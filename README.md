@@ -1,1 +1,1 @@
-# PalichUsefulScripts
+# PalichMos Useful Scripts
