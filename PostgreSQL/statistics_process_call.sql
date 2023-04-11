@@ -16,6 +16,7 @@ AS $function$
 /**
  * @PalichMos
  * @author @kinerix Anna Fadeeva
+ * Using the process call statistics, you can determine which of them are the most critical. These processes must be the first tested before upgrade iDempiere.
  * */
 
 DECLARE langCode      CHARACTER VARYING;

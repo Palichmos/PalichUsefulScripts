@@ -8,6 +8,7 @@ AS $function$
 /**
  * @PalichMos
  * @author @kinerix Anna Fadeeva
+ * Using the table record statistics, you can determine which of table are the most critical. These tables and documents on these tables must be the first tested before upgrade iDempiere.
  * */
 
 DECLARE langCode CHARACTER VARYING;
@@ -505,4 +506,5 @@ SELECT c.ad_client_id,
            "5 days ago" NUMERIC,
            "6 days ago" NUMERIC)
  ORDER BY c.ad_client_id, "Percent" DESC;
-COMMENT ON VIEW statistics_table_record_v IS '@PalichMos, @author @kinerix Anna Fadeeva';
+COMMENT ON VIEW statistics_table_record_v IS '@PalichMos, @author @kinerix Anna Fadeeva
+Using the table record statistics, you can determine which of table are the most critical. These tables and documents on these tables must be the first tested before upgrade iDempiere.';
