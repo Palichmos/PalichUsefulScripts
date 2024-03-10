@@ -598,8 +598,20 @@ L2 = (SELECT ARRAY[(SELECT array_agg(array_to_string(ARRAY[(
               d.QtyRequiered2,
               d.BlUomQtyRequiered2,
               d.BlUom2_C_UOM_ID,
-              d.Price1, -- Price1
-              d.Price2, -- Price2
+              CASE
+               WHEN z.Category IN (0, 1) -- END product OR semi-finished product
+                AND d.QtyRequiered1 > 0
+                AND d.Price1 = 0
+               THEN round(z.Cost1 / d.QtyRequiered1, 2)
+               ELSE d.Price1
+                END, -- Price1
+              CASE
+               WHEN z.Category IN (0, 1) -- END product OR semi-finished product
+                AND d.QtyRequiered2 > 0
+                AND d.Price2 = 0
+               THEN round(z.Cost2 / d.QtyRequiered2, 2)
+               ELSE d.Price2
+                END, -- Price2
               z.Cost1,
               z.Cost2,
               d.Description1,
