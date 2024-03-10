@@ -1,0 +1,269 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="BomQtyReport_subreport1" pageWidth="667" pageHeight="802" columnWidth="627" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" isIgnorePagination="true" uuid="f062345c-0f09-4770-95a4-0ecb22b04df5">
+	<property name="ireport.zoom" value="2.143588810000002"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<style name="ProductBom" forecolor="#000000" fontName="DejaVu Sans" fontSize="8" isBold="false" isItalic="true" isUnderline="false" isStrikeThrough="false" pdfFontName="&lt;Default&gt;" pdfEncoding="Cp1251" isPdfEmbedded="false">
+		<pen lineWidth="0.5"/>
+		<conditionalStyle>
+			<conditionExpression><![CDATA[$F{category}.intValue() == 1]]></conditionExpression>
+			<style mode="Opaque" forecolor="#000000" backcolor="#E6E6E6" hAlign="Left" vAlign="Middle" fontName="DejaVu Sans" fontSize="8" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="&lt;Default&gt;" pdfEncoding="Cp1251">
+				<box leftPadding="3" rightPadding="3">
+					<topPen lineWidth="0.5" lineStyle="Solid"/>
+					<leftPen lineWidth="0.5" lineStyle="Solid"/>
+					<bottomPen lineWidth="0.5" lineStyle="Solid"/>
+					<rightPen lineWidth="0.5" lineStyle="Solid"/>
+				</box>
+			</style>
+		</conditionalStyle>
+		<conditionalStyle>
+			<conditionExpression><![CDATA[$F{category}.intValue() == 2]]></conditionExpression>
+			<style mode="Transparent" forecolor="#000000" hAlign="Left" vAlign="Middle" fontName="DejaVu Sans" fontSize="8" isBold="false" isItalic="true" isUnderline="false" isStrikeThrough="false" pdfFontName="&lt;Default&gt;" pdfEncoding="Cp1251">
+				<box leftPadding="3" rightPadding="3">
+					<pen lineStyle="Dashed"/>
+					<topPen lineWidth="0.5" lineStyle="Solid"/>
+					<leftPen lineWidth="0.5" lineStyle="Solid"/>
+					<bottomPen lineWidth="0.5" lineStyle="Solid"/>
+					<rightPen lineWidth="0.5" lineStyle="Solid"/>
+				</box>
+			</style>
+		</conditionalStyle>
+		<conditionalStyle>
+			<conditionExpression><![CDATA[$F{category}.intValue() == 0]]></conditionExpression>
+			<style mode="Opaque" forecolor="#000000" backcolor="#FFCC99" hAlign="Left" vAlign="Middle" fontName="DejaVu Sans" fontSize="8" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="&lt;Default&gt;" pdfEncoding="Cp1251">
+				<box leftPadding="3" rightPadding="3">
+					<topPen lineWidth="0.5" lineStyle="Solid"/>
+					<leftPen lineWidth="0.5" lineStyle="Solid"/>
+					<bottomPen lineWidth="0.5" lineStyle="Solid"/>
+					<rightPen lineWidth="0.5" lineStyle="Solid"/>
+				</box>
+			</style>
+		</conditionalStyle>
+	</style>
+	<style name="ComponentType" style="ProductBom" mode="Transparent" isPdfEmbedded="true">
+		<conditionalStyle>
+			<conditionExpression><![CDATA[$F{componenttype1}.equals("VA")]]></conditionExpression>
+			<style mode="Opaque" backcolor="#FFCCFF"/>
+		</conditionalStyle>
+		<conditionalStyle>
+			<conditionExpression><![CDATA[$F{componenttype1}.equals("PH")]]></conditionExpression>
+			<style mode="Opaque" backcolor="#CCFFFF"/>
+		</conditionalStyle>
+	</style>
+	<parameter name="DateStart" class="java.sql.Timestamp">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="M_Product_ID" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="PP_Product_BOM_ID" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="QtyRequiered" class="java.math.BigDecimal">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="showComponentNextLevel" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="showVariants" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="showOnlyFirstLevel" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT to_char($P{DateStart}::timestamp without time zone, 'dd.MM.yyyy  HH24.MI') AS DateStart,
+         rep.M_Product_ID,
+         rep.productName,
+         rep.uomsymbol,
+         rep.Category,
+         rep.M_Product_Category_Parent_ID,
+         rep.ComponentType1,
+         CASE WHEN rep.QtyRequiered1 = 0 THEN NULL ELSE rep.QtyRequiered1 END AS QtyRequiered1,
+         CASE WHEN rep.sumCost1 = 0 THEN NULL ELSE rep.sumCost1 END AS sumCost1,
+         rep.Price1,
+         rep.description1
+    FROM target_cost_bom_subreport($P{M_Product_ID},
+                                   $P{PP_Product_BOM_ID},
+                                   $P{DateStart}::timestamp WITHOUT time ZONE,
+                                   NULL,
+                                   $P{QtyRequiered},
+                                   'Y', -- calculateCost
+                                   $P{showComponentNextLevel},
+                                   $P{showVariants},
+                                   $P{showOnlyFirstLevel}
+             ) rep
+   ORDER BY rep.Category,
+            rep.productName;]]>
+	</queryString>
+	<field name="datestart" class="java.lang.String"/>
+	<field name="m_product_id" class="java.math.BigDecimal"/>
+	<field name="productname" class="java.lang.String"/>
+	<field name="uomsymbol" class="java.lang.String"/>
+	<field name="category" class="java.math.BigDecimal"/>
+	<field name="m_product_category_parent_id" class="java.math.BigDecimal"/>
+	<field name="componenttype1" class="java.lang.String"/>
+	<field name="qtyrequiered1" class="java.math.BigDecimal"/>
+	<field name="sumcost1" class="java.math.BigDecimal"/>
+	<field name="price1" class="java.math.BigDecimal"/>
+	<field name="description1" class="java.lang.String"/>
+	<title>
+		<band height="45" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="12" width="515" height="22" uuid="d0b7540a-c313-4660-8b95-4efb9233ea69"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="DejaVu Sans" size="18"/>
+				</textElement>
+				<text><![CDATA[Total requirement:]]></text>
+			</staticText>
+		</band>
+	</title>
+	<columnHeader>
+		<band height="20" splitType="Stretch">
+			<staticText>
+				<reportElement x="47" y="0" width="344" height="20" uuid="470a0cb2-fe07-4d36-8e07-0901c1173184"/>
+				<box leftPadding="3" rightPadding="3">
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="DejaVu Sans" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Product]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="426" y="0" width="91" height="20" uuid="12a6eda2-394b-46d6-95ba-59c51edcd406"/>
+				<box leftPadding="3" rightPadding="3">
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="DejaVu Sans" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Qty Required]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="0" width="20" height="20" uuid="aad48e1b-1dd4-4cfd-8ebd-c3561a29c65a"/>
+				<box>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
+					<font fontName="DejaVu Sans" size="8" isBold="true" pdfEncoding="Cp1251" isPdfEmbedded="true"/>
+				</textElement>
+				<text><![CDATA[№]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="20" y="0" width="27" height="20" uuid="33ed8ff4-0c16-4247-87ec-116cdc855a0a"/>
+				<box leftPadding="3" rightPadding="3">
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="DejaVu Sans" size="6" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Cate-gory]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="517" y="0" width="35" height="20" uuid="b3c0cfa9-18ff-4f4c-a8bf-bf4a4509a3cc"/>
+				<box leftPadding="3" rightPadding="3">
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="DejaVu Sans" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[UOM]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="391" y="0" width="35" height="20" uuid="3165ed9d-4746-4127-ab38-40748a5f5535"/>
+				<box leftPadding="3" rightPadding="3">
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="DejaVu Sans" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Type]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="15" splitType="Stretch">
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToBandHeight" x="426" y="0" width="91" height="15" uuid="4afe6953-6ab3-4500-83b2-98bba7a08f3b"/>
+				<box leftPadding="3" rightPadding="3">
+					<leftPen lineWidth="0.5" lineStyle="Solid"/>
+					<bottomPen lineWidth="0.5" lineStyle="Solid"/>
+					<rightPen lineWidth="0.25" lineStyle="Dashed"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="DejaVu Sans" size="8" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{qtyrequiered1}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement stretchType="RelativeToBandHeight" x="20" y="0" width="27" height="15" uuid="6ee794af-19a5-4e66-8dd2-5e981b52a549"/>
+				<box>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="DejaVu Sans" size="8" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{category}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToBandHeight" x="517" y="0" width="35" height="15" uuid="c9070fe3-625a-4991-a0a2-fd9214cff605"/>
+				<box leftPadding="3" rightPadding="3">
+					<leftPen lineWidth="0.5" lineStyle="Solid"/>
+					<bottomPen lineWidth="0.5" lineStyle="Solid"/>
+					<rightPen lineWidth="0.5" lineStyle="Solid"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="DejaVu Sans" size="8" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{uomsymbol}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement style="ProductBom" x="47" y="0" width="344" height="15" uuid="907a2602-0194-4ddc-b895-387f9ff021b0"/>
+				<textFieldExpression><![CDATA[$F{productname}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="20" height="15" uuid="6c15b72c-5025-4a63-91ca-36d356a99d3f"/>
+				<box>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="7" isBold="true" pdfEncoding="Cp1251" isPdfEmbedded="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{REPORT_COUNT}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement style="ComponentType" stretchType="RelativeToBandHeight" x="391" y="0" width="35" height="15" uuid="ffd38cf3-5dd7-4973-b9b6-63cca0583d42"/>
+				<box leftPadding="3" rightPadding="3">
+					<leftPen lineWidth="0.5" lineStyle="Solid"/>
+					<bottomPen lineWidth="0.5" lineStyle="Solid"/>
+					<rightPen lineWidth="0.5" lineStyle="Solid"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="DejaVu Sans" size="8" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{componenttype1}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>
