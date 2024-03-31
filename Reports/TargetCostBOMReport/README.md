@@ -1,6 +1,8 @@
 # BOM & Formula Reports
 # Target Cost BOM Report, BomQty Cost Report, BomQty Report
 
+@author @kinerix Anna Fadeeva
+
 http://palichmos.ru/
 
 1) Before create functions need to create custom type. Source code of custom type in functions comment:
