@@ -17,5 +17,7 @@ http://palichmos.ru/
 5) If Manufacturing Management is diactivated - you need to activate some menus.
 
 Video presentation: https://youtu.be/Xrda3AEE4Ek
+
 Forum : https://groups.google.com/g/idempiere/c/p9fC5uzvCW8
+
 Wiki: https://wiki.idempiere.org/en/TargetCostBOMReport
