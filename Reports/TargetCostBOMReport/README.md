@@ -7,11 +7,11 @@ Sponsor [Palichmos Team](http://palichmos.ru/)
 
 Example of reports is attahed on Wiki.
 
-Wiki: https://wiki.idempiere.org/en/TargetCostBOMReport
+Wiki : https://wiki.idempiere.org/en/TargetCostBOMReport
 
 Discussion : https://groups.google.com/g/idempiere/c/p9fC5uzvCW8
 
-Video presentation: https://youtu.be/Xrda3AEE4Ek
+Video presentation : https://youtu.be/Xrda3AEE4Ek
 
 How to run :
 
