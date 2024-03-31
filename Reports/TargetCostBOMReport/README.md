@@ -24,3 +24,5 @@ Video presentation: https://youtu.be/Xrda3AEE4Ek
 Forum : https://groups.google.com/g/idempiere/c/p9fC5uzvCW8
 
 Wiki: https://wiki.idempiere.org/en/TargetCostBOMReport
+
+https://github.com/Palichmos/PalichUsefulScripts/blob/main/Reports/TargetCostBOMReport/BOMReportsInMenu.png
