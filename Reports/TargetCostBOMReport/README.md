@@ -1,6 +1,8 @@
 # BOM & Formula Reports
 # Target Cost BOM Report, BomQty Cost Report, BomQty Report
 
+http://palichmos.ru/
+
 1) Before create functions need to create custom type. Source code of custom type in functions comment:
     1) Create custom type "target_Cost_bom" from comment in function code in file "01_target_cost_bom.sql".
     2) Create custom type "target_Cost_bom_ReverseSum" from comment in function code in file "01_target_cost_bom.sql".
@@ -13,3 +15,7 @@
 3) Run process Role Access Update to view reports in Menu.
 4) Go on Tenant System and attach jrxml/jasper files in reports process from /BomQtyReport, /BomQtyCostReport, /TargetCostBOMReport.
 5) If Manufacturing Management is diactivated - you need to activate some menus.
+
+Video presentation: https://youtu.be/Xrda3AEE4Ek
+Forum : https://groups.google.com/g/idempiere/c/p9fC5uzvCW8
+Wiki: https://wiki.idempiere.org/en/TargetCostBOMReport
