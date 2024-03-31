@@ -1,9 +1,9 @@
 # BOM & Formula Reports
 # Target Cost BOM Report, BomQty Cost Report, BomQty Report
 
-@author @kinerix Anna Fadeeva
+Author [Anna Fadeeva](https://github.com/kinerix)
 
-http://palichmos.ru/
+Sponsor [Palichmos Team](http://palichmos.ru/)
 
 Example of reports is attahed on Wiki.
 
